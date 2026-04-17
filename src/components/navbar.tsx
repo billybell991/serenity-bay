@@ -30,6 +30,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const clickCount = useRef(0);
   const clickTimer = useRef<NodeJS.Timeout | null>(null);
@@ -57,6 +58,7 @@ export function Navbar() {
   const activeColor = scrolled ? "var(--gold)" : "white";
 
   return (
+    <>
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
@@ -80,7 +82,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <ul className="hidden lg:flex items-center gap-x-2">
+        <ul className="hidden items-center gap-x-2">
           {NAV_LINKS.map((link) =>
             link.children ? (
               <li
@@ -129,55 +131,102 @@ export function Navbar() {
         </ul>
 
         <button
-          className="lg:hidden p-2 transition-colors duration-500"
+          className="p-2 transition-colors duration-500"
           style={{ color: scrolled ? "var(--text-main)" : "white" }}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle navigation"
         >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileOpen ? null : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
+    </nav>
+
+      {/* ── Full-screen luxury overlay ── */}
       {mobileOpen && (
         <div
-          className="lg:hidden border-t pb-6"
-          style={{ background: "var(--bg-card)", borderTopColor: "var(--nav-border)" }}
+          className="fixed inset-0 z-[60] flex flex-col items-center justify-center"
+          style={{
+            background: "rgba(10, 8, 4, 0.75)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+          }}
         >
-          {NAV_LINKS.map((link) =>
-            link.children ? (
-              <div key={link.label}>
-                <p
-                  className="px-6 pt-5 pb-1 text-[0.6rem] uppercase tracking-widest"
-                  style={{ color: "var(--text-dim)" }}
+          {/* Close button */}
+          <button
+            className="absolute top-5 right-5 p-2 text-white/70 hover:text-white transition-colors"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close navigation"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          {/* Nav items — flattened, centered */}
+          <nav className="flex flex-col items-center gap-1 w-full px-8">
+            {NAV_LINKS.flatMap((link, groupIndex) => {
+              if (link.children) {
+                return [
+                  <p
+                    key={`label-${link.label}`}
+                    className="mt-7 mb-2 text-[0.55rem] uppercase tracking-[0.25em] font-light"
+                    style={{
+                      color: "rgba(255,255,255,0.35)",
+                      animation: "fadeSlideUp 0.5s ease both",
+                      animationDelay: `${groupIndex * 0.07}s`,
+                    }}
+                  >
+                    {link.label}
+                  </p>,
+                  ...link.children.map((child, childIndex) => (
+                    <Link
+                      key={child.href}
+                      href={child.href}
+                      onClick={() => setMobileOpen(false)}
+                      onMouseEnter={() => setHoveredItem(child.href)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      className="py-2 text-xl uppercase tracking-[0.15em] font-light transition-all duration-300"
+                      style={{
+                        color: pathname === child.href ? "var(--gold)" : "white",
+                        opacity: hoveredItem !== null && hoveredItem !== child.href ? 0.25 : 1,
+                        animation: "fadeSlideUp 0.5s ease both",
+                        animationDelay: `${(groupIndex + childIndex + 1) * 0.07}s`,
+                      }}
+                    >
+                      {child.label}
+                    </Link>
+                  )),
+                ];
+              }
+              return [
+                <Link
+                  key={link.href}
+                  href={link.href!}
+                  onClick={() => setMobileOpen(false)}
+                  onMouseEnter={() => setHoveredItem(link.href!)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className="mt-6 py-2 text-2xl uppercase tracking-[0.18em] font-light transition-all duration-300"
+                  style={{
+                    color: pathname === link.href ? "var(--gold)" : "white",
+                    opacity: hoveredItem !== null && hoveredItem !== link.href ? 0.25 : 1,
+                    animation: "fadeSlideUp 0.5s ease both",
+                    animationDelay: `${groupIndex * 0.07}s`,
+                  }}
                 >
                   {link.label}
-                </p>
-                {link.children.map((child) => (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    className="block px-8 py-3 text-[0.65rem] uppercase tracking-widest"
-                    style={{ color: "var(--text-main)" }}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {child.label}
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href!}
-                className="block px-6 py-3 text-[0.65rem] uppercase tracking-widest"
-                style={{ color: pathname === link.href ? "var(--gold)" : "var(--text-main)" }}
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            )
-          )}
+                </Link>,
+              ];
+            })}
+          </nav>
+
+          {/* Subtle branding at the bottom */}
+          <p
+            className="absolute bottom-8 text-[0.55rem] uppercase tracking-[0.3em] font-light"
+            style={{ color: "rgba(255,255,255,0.2)", animation: "fadeSlideUp 0.6s ease 0.5s both" }}
+          >
+            Serenity Resorts · Ottawa Valley
+          </p>
         </div>
       )}
-    </nav>
+    </>
   );
 }
