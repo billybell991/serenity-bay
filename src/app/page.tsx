@@ -167,7 +167,7 @@ export default function HomePage() {
 
       {/* â”€â”€â”€ Features â€” thin gold top line, no card backgrounds â”€â”€â”€ */}
       <section className="py-32" style={{ background: "var(--bg-secondary)" }}>
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-6">
           <motion.div className="text-center mb-24" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.p variants={fadeUp} className="text-[0.65rem] uppercase tracking-[0.4em] mb-4" style={{ color: "var(--gold)" }}>
               What We Offer
