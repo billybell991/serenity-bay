@@ -1,26 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
+/* ─── Design Tokens ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm cream palette */
+  --bg-primary:   #f7f3ec;
+  --bg-secondary: #efe9df;
+  --bg-card:      #faf8f4;
+  --bg-dark:      #1e1a14;
+
+  /* Text */
+  --text-main:  #1e1a14;
+  --text-muted: #7a6e5e;
+  --text-dim:   #a89e8e;
+
+  /* Accents */
+  --gold:         #c9a84c;
+  --gold-light:   #dfc070;
+  --gold-dark:    #a88630;
+  --green:        #3d6b3a;
+  --green-hover:  #2c4e29;
+
+  /* Legacy aliases — used by inner pages */
+  --accent-primary:   #3d6b3a;
+  --accent-secondary: #efe9df;
+  --accent-cta:       #3d6b3a;
+  --accent-cta-hover: #2c4e29;
+  --accent-sage:      #3d6b3a;
+  --accent-sand:      #efe9df;
+
+  /* Nav */
+  --nav-bg:     rgba(247, 243, 236, 0.92);
+  --nav-border: rgba(30, 26, 20, 0.08);
+
+  /* Hero */
+  --hero-overlay: rgba(10, 8, 4, 0.45);
+
+  /* Shadows */
+  --shadow:      0 8px 32px rgba(30, 26, 20, 0.12);
+  --card-shadow: 0 4px 16px rgba(30, 26, 20, 0.07);
+
+  /* Layout */
+  --radius:    8px;
+  --radius-lg: 16px;
+  --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body:    'Raleway', sans-serif;
+  --max-width: 1200px;
+}
+
+:root[data-theme="winter"] {
+  --bg-primary:       #f0f4f8;
+  --bg-secondary:     #e2e8f0;
+  --bg-card:          #f8fafc;
+  --accent-primary:   #4a7fa5;
+  --accent-cta:       #4a7fa5;
+  --accent-cta-hover: #3a6a8e;
+  --accent-sage:      #4a7fa5;
+  --green:            #4a7fa5;
+  --green-hover:      #3a6a8e;
+  --nav-border: rgba(74, 127, 165, 0.15);
+  --hero-overlay: rgba(20, 30, 45, 0.5);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-main);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+a { text-decoration: none; transition: color var(--transition); }
+img { display: block; max-width: 100%; height: auto; }
+
+/* ─── Navigation ─── */
+.glass-nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--nav-border);
+}
+
+/* ─── Cards ─── */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(30, 26, 20, 0.07);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* ─── Buttons — minimalist: transparent bg, 1px border, fill on hover ─── */
+.btn-cta {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid var(--text-main);
+  background: transparent;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-cta:hover {
+  background: var(--text-main);
+  color: white;
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid var(--text-main);
+  background: transparent;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-outline:hover {
+  background: var(--text-main);
+  color: white;
+}
+
+.btn-ghost {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: transparent;
+}
+.btn-ghost:hover {
+  background: white;
+  color: var(--text-main);
+  border-color: white;
+}
+
+/* ─── Section divider — gold line like reference site ─── */
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  border: none;
+  margin: 1.1rem auto 0;
+}
+
+/* ─── Hero ─── */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─── Scroll bounce animation ─── */
+@keyframes bounce-down {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(10px); }
+  60% { transform: translateY(5px); }
+}
+.scroll-indicator { animation: bounce-down 2s infinite; }
+
+
+
