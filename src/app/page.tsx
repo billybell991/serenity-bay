@@ -66,7 +66,7 @@ export default function HomePage() {
         <div
           className="relative overflow-hidden cursor-pointer"
           style={{
-            flex: hoveredPanel === "bay" ? "0 0 60%" : hoveredPanel === "hills" ? "0 0 40%" : "1",
+            flex: hoveredPanel === "bay" ? "3 0 0" : hoveredPanel === "hills" ? "2 0 0" : "1",
             minHeight: "60vh",
             transition: "flex 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
@@ -117,7 +117,7 @@ export default function HomePage() {
         <div
           className="relative overflow-hidden cursor-pointer"
           style={{
-            flex: hoveredPanel === "hills" ? "0 0 60%" : hoveredPanel === "bay" ? "0 0 40%" : "1",
+            flex: hoveredPanel === "hills" ? "3 0 0" : hoveredPanel === "bay" ? "2 0 0" : "1",
             minHeight: "60vh",
             transition: "flex 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
@@ -166,8 +166,8 @@ export default function HomePage() {
       </section>
 
       {/* â”€â”€â”€ Features â€” thin gold top line, no card backgrounds â”€â”€â”€ */}
-      <section className="py-32 px-6" style={{ background: "var(--bg-secondary)" }}>
-        <div className="max-w-5xl mx-auto">
+      <section className="py-32" style={{ background: "var(--bg-secondary)" }}>
+        <div className="max-w-5xl mx-auto px-6">
           <motion.div className="text-center mb-24" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
             <motion.p variants={fadeUp} className="text-[0.65rem] uppercase tracking-[0.4em] mb-4" style={{ color: "var(--gold)" }}>
               What We Offer
@@ -220,11 +220,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-black/55" />
         <div className="relative z-10 w-full max-w-2xl px-6 text-center text-white">
           <motion.div className="flex flex-col items-center" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-[0.65rem] uppercase tracking-[0.4em] mb-4" style={{ opacity: 0.6 }}>
-              Book Your Stay
-            </motion.p>
             <motion.h2 variants={fadeUp} className="text-5xl md:text-6xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>
-              Ready to Book?
+              Plan Your Stay?
             </motion.h2>
             <motion.hr variants={fadeUp} className="section-divider" />
             <motion.p variants={fadeUp} className="text-base mt-8 mb-12 font-light leading-loose" style={{ opacity: 0.8 }}>
