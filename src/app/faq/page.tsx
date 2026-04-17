@@ -50,7 +50,15 @@ function AccordionItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpe
 }
 
 export default function FAQPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openItems, setOpenItems] = useState<Set<number>>(new Set());
+
+  const toggleItem = (i: number) => {
+    setOpenItems((prev) => {
+      const next = new Set(prev);
+      next.has(i) ? next.delete(i) : next.add(i);
+      return next;
+    });
+  };
 
   return (
     <>
@@ -67,17 +75,12 @@ export default function FAQPage() {
                 <AccordionItem
                   q={item.q}
                   a={item.a}
-                  isOpen={openIndex === i}
-                  onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+                  isOpen={openItems.has(i)}
+                  onToggle={() => toggleItem(i)}
                 />
               </motion.div>
             ))}
           </motion.div>
-
-          <div className="text-center mt-16 pt-8" style={{ borderTop: "1px solid var(--nav-border)" }}>
-            <p className="mb-6 text-sm uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)" }}>Still have questions?</p>
-            <a href="tel:6136282454" className="btn-cta">Call 613-628-2454</a>
-          </div>
         </div>
       </section>
     </>

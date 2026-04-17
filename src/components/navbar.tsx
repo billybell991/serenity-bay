@@ -68,7 +68,7 @@ export function Navbar() {
         borderBottom: scrolled ? "1px solid var(--nav-border)" : "1px solid transparent",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-[60px]">
+      <div className="max-w-[1200px] mx-auto flex items-center justify-between h-[60px]" style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>
         <Link href="/" onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer select-none">
           <TreePine
             className="w-5 h-5 transition-colors duration-500"

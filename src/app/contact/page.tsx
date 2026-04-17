@@ -22,7 +22,7 @@ export default function ContactPage() {
       <PageHero
         title="Contact Us"
         subtitle="We'd love to hear from you. Call, email, or send us a message."
-        image="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104169034-7UNQ816UCACRDBO1H59Y/Social+Club.jpg?format=2500w"
+        image="/serenity-bay-sign.jpg"
       />
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto">

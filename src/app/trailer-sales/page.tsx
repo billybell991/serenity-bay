@@ -104,23 +104,20 @@ export default function TrailerSalesPage() {
                     {STATUS_STYLES[listing.status].label}
                   </span>
                 </div>
-                <div className="p-5">
+                <div className="p-5 text-center">
                   <h3 className="text-lg font-bold mb-1" style={{ fontFamily: "var(--font-heading)" }}>{listing.name}</h3>
                   <p className="text-sm mb-2" style={{ color: "var(--text-muted)" }}>{listing.year} · {listing.length}</p>
                   <p className="text-xl font-bold mb-3" style={{ color: "var(--accent-cta)" }}>{listing.price}</p>
                   <p className="text-sm" style={{ color: "var(--text-muted)" }}>{listing.description}</p>
-                  <a href="tel:6136282454" className="btn-cta mt-4 text-sm py-2 px-4 w-full text-center block">
-                    Inquire Now
-                  </a>
                 </div>
               </motion.div>
             ))}
           </motion.div>
         )}
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 py-6" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-            Interested? Call <strong>613-628-2454</strong> or email <strong>office@serenityresorts.ca</strong>
+            Interested? Call <a href="tel:6136282454" className="font-bold hover:underline" style={{ color: "var(--accent-cta)" }}>613-628-2454</a> or email <a href="mailto:office@serenityresorts.ca" className="font-bold hover:underline" style={{ color: "var(--accent-cta)" }}>office@serenityresorts.ca</a>
           </p>
         </div>
       </div>

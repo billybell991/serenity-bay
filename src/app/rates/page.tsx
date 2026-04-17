@@ -26,7 +26,7 @@ export default function RatesPage() {
               <h2 className="text-xl font-bold" style={{ fontFamily: "var(--font-heading)" }}>Serenity Bay</h2>
             </div>
             <div className="p-6 space-y-5">
-              <p className="text-sm" style={{ color: "var(--text-muted)" }}>7200 Hwy 60, Eganville ON — Lakefront on Mink Lake</p>
+              <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>7200 Hwy 60, Eganville ON — Lakefront on Mink Lake</p>
               <div className="space-y-3">
                 <div className="flex justify-between items-center pb-3 border-b border-black/5">
                   <span className="text-sm font-medium">Seasonal Sites</span>
@@ -41,7 +41,7 @@ export default function RatesPage() {
                   <span className="font-bold text-sm" style={{ color: "var(--accent-sage)" }}>Book 7, Pay for 6</span>
                 </div>
               </div>
-              <p className="text-xs" style={{ color: "var(--text-dim)" }}>
+              <p className="text-xs text-center" style={{ color: "var(--text-dim)" }}>
                 + HST. All sites include water, sewer, 30-amp power.
               </p>
             </div>
@@ -54,7 +54,7 @@ export default function RatesPage() {
               <h2 className="text-xl font-bold" style={{ fontFamily: "var(--font-heading)" }}>Serenity Hills</h2>
             </div>
             <div className="p-6 space-y-5">
-              <p className="text-sm" style={{ color: "var(--text-muted)" }}>435 Castleford Rd, Renfrew ON — Rolling Hills &amp; Pool</p>
+              <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>435 Castleford Rd, Renfrew ON — Rolling Hills &amp; Pool</p>
               <div className="space-y-3">
                 <div className="flex justify-between items-center pb-3 border-b border-black/5">
                   <span className="text-sm font-medium">Seasonal Sites</span>
@@ -69,22 +69,14 @@ export default function RatesPage() {
                   <span className="font-bold text-sm" style={{ color: "var(--accent-sage)" }}>Stay 7 for Price of 6</span>
                 </div>
               </div>
-              <p className="text-xs" style={{ color: "var(--text-dim)" }}>
+              <p className="text-xs text-center" style={{ color: "var(--text-dim)" }}>
                 + HST. All sites include water, sewer, 30-amp power.
               </p>
             </div>
           </motion.div>
         </motion.div>
 
-        <div className="text-center mt-14">
-          <p className="mb-4" style={{ color: "var(--text-muted)" }}>
-            For more information or to book a reservation:
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:6136282454" className="btn-cta">Call 613-628-2454</a>
-            <a href="mailto:office@serenityresorts.ca" className="btn-outline">Email Us</a>
-          </div>
-        </div>
+
       </div>
     </section>
     </>

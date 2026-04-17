@@ -58,7 +58,7 @@ export default function AttractionsPage() {
       <PageHero
         title="Local Attractions"
         subtitle="There's so much to explore in the Ottawa Valley"
-        image="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104159318-FTEJDO59VGBXYFBGVR7K/IMG_1415.jpg?format=2500w"
+        image="/ottawa-valley.jpg"
       />
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[860px] mx-auto">
