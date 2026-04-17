@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 /* ─── Design Tokens ─── */
@@ -44,9 +44,63 @@
   --radius:    8px;
   --radius-lg: 16px;
   --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body:    'Raleway', sans-serif;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
   --max-width: 1200px;
+}
+
+:root[data-theme="summer"] {
+  --bg-primary:       #f5f9fc;
+  --bg-secondary:     #e4eff6;
+  --bg-card:          #f9fbfd;
+  --text-muted:       #5a7a8e;
+  --text-dim:         #8eaabb;
+  --accent-primary:   #2a7fa5;
+  --accent-cta:       #2a7fa5;
+  --accent-cta-hover: #1e6488;
+  --accent-sage:      #3d6b3a;
+  --accent-sand:      #e4eff6;
+  --gold:             #d4a843;
+  --gold-light:       #e0be60;
+  --nav-bg:           rgba(245, 249, 252, 0.92);
+  --nav-border:       rgba(42, 127, 165, 0.1);
+  --hero-overlay:     rgba(8, 18, 28, 0.4);
+}
+
+:root[data-theme="autumn"] {
+  --bg-primary:       #faf6f1;
+  --bg-secondary:     #f0e6d8;
+  --bg-card:          #fcf9f5;
+  --text-muted:       #8a6a4e;
+  --text-dim:         #b09878;
+  --accent-primary:   #c1653a;
+  --accent-cta:       #c1653a;
+  --accent-cta-hover: #a3522d;
+  --accent-sage:      #6b8a3d;
+  --accent-sand:      #f0e6d8;
+  --gold:             #c9a84c;
+  --gold-light:       #dfc070;
+  --nav-bg:           rgba(250, 246, 241, 0.92);
+  --nav-border:       rgba(193, 101, 58, 0.1);
+  --hero-overlay:     rgba(20, 12, 5, 0.45);
+}
+
+:root[data-theme="spring"] {
+  --bg-primary:       #f4f8f1;
+  --bg-secondary:     #e8f0e3;
+  --bg-card:          #f9fbf7;
+  --text-muted:       #5e7a56;
+  --text-dim:         #8da686;
+  --accent-primary:   #3d6b3a;
+  --accent-cta:       #3d6b3a;
+  --accent-cta-hover: #2c4e29;
+  --accent-sage:      #5a9a52;
+  --accent-sand:      #e8f0e3;
+  --gold:             #8bb83a;
+  --gold-light:       #a4d44e;
+  --nav-bg:           rgba(244, 248, 241, 0.92);
+  --nav-border:       rgba(61, 107, 58, 0.1);
+  --hero-overlay:     rgba(10, 20, 8, 0.4);
 }
 
 :root[data-theme="winter"] {

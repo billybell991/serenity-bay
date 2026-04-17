@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/lib/theme-context";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WinterOverlay } from "@/components/winter-overlay";
+import { AnnouncementBanner } from "@/components/announcement-banner";
 
 export const metadata: Metadata = {
   title: "Serenity Resorts — Camping in the Ottawa Valley",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <ThemeProvider>
           <WinterOverlay />
           <Navbar />
+          <AnnouncementBanner />
           <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>

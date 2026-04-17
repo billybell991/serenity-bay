@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Truck, Plus, X, Edit2, Trash2 } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { useImages } from "@/lib/use-images";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
@@ -76,6 +77,7 @@ export default function TrailerSalesPage() {
     setListings(getTrailerListings());
   }, []);
 
+  const images = useImages();
   const available = listings.filter((l) => l.status !== "sold");
 
   return (
@@ -83,7 +85,7 @@ export default function TrailerSalesPage() {
       <PageHero
         title="Trailer Sales"
         subtitle="Find your home away from home. Browse trailers for sale at Serenity Resorts."
-        image="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362849424807-Z6M67RIT0YSZMWQDX318/Canadian+Timberland+campground+002.JPG?format=2500w"
+        image={images.heroes.trailerSales}
       />
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto">
@@ -131,6 +133,7 @@ export default function TrailerSalesPage() {
 export function TrailerEditor() {
   const [listings, setListings] = useState<TrailerListing[]>([]);
   const [editing, setEditing] = useState<TrailerListing | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     setListings(getTrailerListings());
@@ -148,21 +151,32 @@ export function TrailerEditor() {
   const handleAdd = () => {
     const newListing: TrailerListing = {
       id: Date.now().toString(),
-      name: "New Trailer",
-      year: "2024",
-      length: "24 ft",
-      price: "$0",
-      description: "Description...",
-      image: "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1360469101222-I9P7E0T9V4WFN7YRDK0E/014.JPG?format=1000w",
+      name: "",
+      year: "",
+      length: "",
+      price: "",
+      description: "",
+      image: "",
       status: "available",
     };
-    save([...listings, newListing]);
     setEditing(newListing);
+    setIsAdding(true);
   };
 
   const handleSave = (updated: TrailerListing) => {
-    save(listings.map((l) => (l.id === updated.id ? updated : l)));
+    const withPrice = { ...updated, price: updated.price.startsWith("$") ? updated.price : `$${updated.price}` };
+    if (isAdding) {
+      save([...listings, withPrice]);
+    } else {
+      save(listings.map((l) => (l.id === withPrice.id ? withPrice : l)));
+    }
     setEditing(null);
+    setIsAdding(false);
+  };
+
+  const handleCancel = () => {
+    setEditing(null);
+    setIsAdding(false);
   };
 
   return (
@@ -177,12 +191,19 @@ export function TrailerEditor() {
       <div className="space-y-3">
         {listings.map((listing) => (
           <div key={listing.id} className="glass-card p-4 flex items-center justify-between">
-            <div>
-              <p className="font-medium">{listing.name}</p>
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>{listing.year} · {listing.length} · {listing.price}</p>
-              <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-bold ${STATUS_STYLES[listing.status].bg} ${STATUS_STYLES[listing.status].text}`}>
-                {STATUS_STYLES[listing.status].label}
-              </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <img
+                src={listing.image}
+                alt={listing.name}
+                style={{ width: "56px", height: "56px", objectFit: "cover", borderRadius: "6px", flexShrink: 0, background: "var(--bg-primary)" }}
+              />
+              <div>
+                <p className="font-medium">{listing.name}</p>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>{listing.year} · {listing.length} · {listing.price.startsWith("$") ? listing.price : `$${listing.price}`}</p>
+                <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-bold ${STATUS_STYLES[listing.status].bg} ${STATUS_STYLES[listing.status].text}`}>
+                  {STATUS_STYLES[listing.status].label}
+                </span>
+              </div>
             </div>
             <div className="flex gap-2">
               <button onClick={() => setEditing(listing)} className="p-2 rounded-lg hover:bg-black/5">
@@ -201,8 +222,8 @@ export function TrailerEditor() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
           <div className="glass-card p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-bold">Edit Trailer</h4>
-              <button onClick={() => setEditing(null)}><X className="w-5 h-5" /></button>
+              <h4 className="font-bold">{isAdding ? "Add Trailer" : "Edit Trailer"}</h4>
+              <button onClick={handleCancel}><X className="w-5 h-5" /></button>
             </div>
             <form
               onSubmit={(e) => {
@@ -211,33 +232,83 @@ export function TrailerEditor() {
               }}
               className="space-y-3"
             >
-              {(["name", "year", "length", "price", "description", "image"] as const).map((field) => (
+              {(["name", "year", "length", "price", "description"] as const).map((field) => (
                 <div key={field}>
                   <label className="block text-xs font-medium mb-1 capitalize">{field}</label>
                   {field === "description" ? (
                     <textarea
                       value={editing[field]}
                       onChange={(e) => setEditing({ ...editing, [field]: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-black/10 text-sm"
+                      className="w-full px-3 py-2 border border-black/10 text-sm"
                       style={{ background: "var(--bg-secondary)" }}
                       rows={3}
                     />
+                  ) : field === "price" ? (
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span style={{ padding: "0.5rem 0.75rem", background: "var(--bg-primary)", border: "1px solid rgba(0,0,0,0.1)", borderRight: "none", fontSize: "0.875rem", fontWeight: 600 }}>$</span>
+                      <input
+                        value={editing.price.replace(/^\$/, "")}
+                        onChange={(e) => setEditing({ ...editing, price: e.target.value.replace(/^\$/, "") })}
+                        className="w-full px-3 py-2 border border-black/10 text-sm"
+                        style={{ background: "var(--bg-secondary)" }}
+                        placeholder="0"
+                        inputMode="numeric"
+                      />
+                    </div>
                   ) : (
                     <input
                       value={editing[field]}
                       onChange={(e) => setEditing({ ...editing, [field]: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-black/10 text-sm"
+                      className="w-full px-3 py-2 border border-black/10 text-sm"
                       style={{ background: "var(--bg-secondary)" }}
                     />
                   )}
                 </div>
               ))}
               <div>
+                <label className="block text-xs font-medium mb-1">Photo</label>
+                {editing.image && (
+                  <img src={editing.image} alt="Preview" style={{ width: "100%", height: "120px", objectFit: "cover", marginBottom: "0.5rem", borderRadius: "4px" }} />
+                )}
+                <label
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.5rem 1rem",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    border: "1px solid rgba(0,0,0,0.15)",
+                    background: "var(--bg-secondary)",
+                    color: "var(--text-main)",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  📷 {editing.image ? "Change Photo" : "Choose Photo"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          setEditing({ ...editing, image: reader.result as string });
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    style={{ display: "none" }}
+                  />
+                </label>
+              </div>
+              <div>
                 <label className="block text-xs font-medium mb-1">Status</label>
                 <select
                   value={editing.status}
                   onChange={(e) => setEditing({ ...editing, status: e.target.value as TrailerListing["status"] })}
-                  className="w-full px-3 py-2 rounded-lg border border-black/10 text-sm"
+                  className="w-full px-3 py-2 border border-black/10 text-sm"
                   style={{ background: "var(--bg-secondary)" }}
                 >
                   <option value="available">Available</option>

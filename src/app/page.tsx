@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, DollarSign, Truck, Phone, Mail, Tent, Fish, PawPrint, Star } from "lucide-react";
+import { useImages } from "@/lib/use-images";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -14,13 +15,14 @@ const stagger = { visible: { transition: { staggerChildren: 0.12 } } };
 
 export default function HomePage() {
   const [hoveredPanel, setHoveredPanel] = useState<"bay" | "hills" | null>(null);
+  const images = useImages();
 
   return (
     <>
-      {/* â”€â”€â”€ Hero â”€â”€â”€ */}
+      {/* ─── Hero ─── */}
       <section className="hero-section">
         <Image
-          src="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104504491-ZQH6QM917WV13HP9VKB1/Lake+Front.jpeg?format=2500w"
+          src={images.heroes.home}
           alt="Serenity Bay lakefront at golden hour"
           fill
           className="object-cover"
@@ -42,7 +44,6 @@ export default function HomePage() {
           <motion.h1 variants={fadeUp} className="text-6xl md:text-8xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>
             Serenity Resorts
           </motion.h1>
-          <motion.hr variants={fadeUp} className="section-divider" />
           <motion.p variants={fadeUp} className="text-base md:text-lg mt-7 mb-12 font-light leading-loose" style={{ opacity: 0.8 }}>
             Where families find their perfect campsite
           </motion.p>
@@ -74,7 +75,7 @@ export default function HomePage() {
           onMouseLeave={() => setHoveredPanel(null)}
         >
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104547963-ID1TR2SHL8XTFF7K95K6/Swimming+Area.jpeg?format=2500w"
+            src={images.heroes.homeBay}
             alt="Serenity Bay"
             fill
             className="object-cover"
@@ -89,7 +90,6 @@ export default function HomePage() {
             <h3 className="text-5xl md:text-6xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-heading)" }}>
               Serenity Bay
             </h3>
-            <hr className="section-divider" />
             <p
               className="text-sm text-white/75 mt-7 max-w-[260px] leading-loose"
               style={{
@@ -98,7 +98,7 @@ export default function HomePage() {
                 transition: "opacity 0.45s ease, transform 0.45s ease",
               }}
             >
-              Sandy beach on Mink Lake. Oversized lots, dock space, great fishing.
+              A sandy beach on Mink Lake, oversized lakefront lots, and some of the best bass fishing in the Valley.
             </p>
             <span
               className="btn-ghost mt-7"
@@ -125,7 +125,7 @@ export default function HomePage() {
           onMouseLeave={() => setHoveredPanel(null)}
         >
           <Image
-            src="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615039850403-DOAGE43MJ8BEGANYEYN2/SH+overhead1.jpg?format=2500w"
+            src={images.heroes.homeHills}
             alt="Serenity Hills"
             fill
             className="object-cover"
@@ -140,7 +140,6 @@ export default function HomePage() {
             <h3 className="text-5xl md:text-6xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-heading)" }}>
               Serenity Hills
             </h3>
-            <hr className="section-divider" />
             <p
               className="text-sm text-white/75 mt-7 max-w-[260px] leading-loose"
               style={{
@@ -149,7 +148,7 @@ export default function HomePage() {
                 transition: "opacity 0.45s ease, transform 0.45s ease",
               }}
             >
-              Saltwater pool, rolling hills, and big rig pull-thrus to 66ft.
+              A heated saltwater pool, spacious pull-thru sites up to 66 ft, and peaceful hillside views.
             </p>
             <span
               className="btn-ghost mt-7"
@@ -168,14 +167,10 @@ export default function HomePage() {
       {/* â”€â”€â”€ Features â€” thin gold top line, no card backgrounds â”€â”€â”€ */}
       <section className="py-32" style={{ background: "var(--bg-secondary)" }}>
         <div className="max-w-[1200px] mx-auto px-6">
-          <motion.div className="text-center mb-24" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-            <motion.p variants={fadeUp} className="text-[0.65rem] uppercase tracking-[0.4em] mb-4" style={{ color: "var(--gold)" }}>
-              What We Offer
-            </motion.p>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-heading)" }}>
-              Everything You Need
+          <motion.div className="text-center" style={{ marginTop: "0.5rem", marginBottom: "1rem" }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            <motion.h2 variants={fadeUp} className="text-xl md:text-2xl font-bold" style={{ fontFamily: "var(--font-heading)", paddingTop: "0.5rem", paddingBottom: "0.5rem", color: "var(--text-primary)" }}>
+              Your Home Away from Home
             </motion.h2>
-            <motion.hr variants={fadeUp} className="section-divider" />
           </motion.div>
 
           <motion.div
@@ -223,7 +218,6 @@ export default function HomePage() {
             <motion.h2 variants={fadeUp} className="text-5xl md:text-6xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>
               Plan Your Stay?
             </motion.h2>
-            <motion.hr variants={fadeUp} className="section-divider" />
             <motion.p variants={fadeUp} className="text-base mt-8 mb-12 font-light leading-loose" style={{ opacity: 0.8 }}>
               Call us or send an email &mdash; we&apos;d love to welcome your family.
             </motion.p>

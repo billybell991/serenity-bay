@@ -3,21 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Trees, MapPin, Droplets, Tent, Truck, TreePine, Baby, Shirt, Flame } from "lucide-react";
+import { SiteAvailabilityGrid } from "@/components/site-availability-grid";
+import { useImages } from "@/lib/use-images";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
-
-const PHOTOS = [
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615039850403-DOAGE43MJ8BEGANYEYN2/SH+overhead1.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615039850972-Q1N6QQEAQY5QZ3EABB74/SH+Overhead+2.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362847903603-W8YLMJ0ORFVZBTSIRT1E/TimberP2-12.JPG?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362847923407-L2F7JMQNA8UDI2U3U9XK/TimberP14-12.JPG?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362848613311-YJCWRW2RIQQ3XBC7BGIT/TimberP55-12.JPG?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104791466-9782KXB5ZDPGHXBSTXCV/Social+Club+SH.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104810337-GR0X5GXJQE0A11E7HLE0/Laundry+Room+SH.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362848639716-LCEQUEJEE45OE8052FEC/Canadian+Timberland+campground+115.JPG?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1362848645899-MZBXLH380EEMQQ3OXW6Y/TimberK20-12.JPG?format=1000w",
-];
 
 const AMENITIES = [
   { icon: Tent, label: "Full Service Sites" },
@@ -31,12 +21,14 @@ const AMENITIES = [
 ];
 
 export default function SerenityHillsPage() {
+  const images = useImages();
+
   return (
     <>
       {/* Hero */}
       <section className="hero-section min-h-[60vh]">
         <Image
-          src="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615039850403-DOAGE43MJ8BEGANYEYN2/SH+overhead1.jpg?format=2500w"
+          src={images.heroes.hillsLocation}
           alt="Serenity Hills aerial view"
           fill
           className="object-cover"
@@ -123,12 +115,19 @@ export default function SerenityHillsPage() {
         </div>
       </section>
 
+      {/* Site Availability */}
+      <section className="py-16 px-6" style={{ background: "var(--bg-secondary)" }}>
+        <div className="max-w-[1200px] mx-auto">
+          <SiteAvailabilityGrid location="hills" />
+        </div>
+      </section>
+
       {/* Photo Gallery */}
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto">
           <h2 className="text-3xl font-bold text-center mb-10" style={{ fontFamily: "var(--font-heading)" }}>Photo Gallery</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PHOTOS.map((src, i) => (
+            {images.galleries.hills.map((src, i) => (
               <div key={i} className="relative h-52 rounded-2xl overflow-hidden glass-card">
                 <Image src={src} alt={`Serenity Hills photo ${i + 1}`} fill className="object-cover" />
               </div>

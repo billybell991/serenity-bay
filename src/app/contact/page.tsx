@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { useImages } from "@/lib/use-images";
+import { addSubmission } from "@/lib/contact-data";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
@@ -13,16 +15,26 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In production, this would POST to an API
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    addSubmission({
+      name: (data.get("name") as string) || "",
+      email: (data.get("email") as string) || "",
+      phone: (data.get("phone") as string) || "",
+      location: (data.get("location") as string) || "",
+      message: (data.get("message") as string) || "",
+    });
     setSubmitted(true);
   };
+
+  const images = useImages();
 
   return (
     <>
       <PageHero
         title="Contact Us"
         subtitle="We'd love to hear from you. Call, email, or send us a message."
-        image="/serenity-bay-sign.jpg"
+        image={images.heroes.contact}
       />
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto">
@@ -90,6 +102,7 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium mb-1">Name</label>
                       <input
                         type="text"
+                        name="name"
                         required
                     className="w-full px-4 py-3 border text-sm focus:outline-none"
                         style={{ background: "var(--bg-secondary)", borderColor: "var(--nav-border)" }}
@@ -99,6 +112,7 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium mb-1">Email</label>
                       <input
                         type="email"
+                        name="email"
                         required
                         className="w-full px-4 py-3 border text-sm focus:outline-none"
                         style={{ background: "var(--bg-secondary)", borderColor: "var(--nav-border)" }}
@@ -109,6 +123,7 @@ export default function ContactPage() {
                     <label className="block text-sm font-medium mb-1">Phone</label>
                     <input
                       type="tel"
+                      name="phone"
                       className="w-full px-4 py-3 border text-sm focus:outline-none"
                       style={{ background: "var(--bg-secondary)", borderColor: "var(--nav-border)" }}
                     />
@@ -116,6 +131,7 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-medium mb-1">Location Interest</label>
                     <select
+                      name="location"
                       className="w-full px-4 py-3 border text-sm focus:outline-none"
                       style={{ background: "var(--bg-secondary)", borderColor: "var(--nav-border)" }}
                     >
@@ -128,6 +144,7 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-medium mb-1">Message</label>
                     <textarea
+                      name="message"
                       required
                       rows={5}
                       className="w-full px-4 py-3 border text-sm focus:outline-none resize-none"

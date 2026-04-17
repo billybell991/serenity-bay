@@ -11,7 +11,7 @@ const NAV_LINKS = [
     children: [
       { href: "/locations/serenity-bay", label: "Serenity Bay - Eganville" },
       { href: "/locations/serenity-hills", label: "Serenity Hills - Renfrew" },
-      { href: "/map", label: "Park Map" },
+      { href: "/map", label: "Serenity Bay Map" },
     ],
   },
   { href: "/rates", label: "Rates" },

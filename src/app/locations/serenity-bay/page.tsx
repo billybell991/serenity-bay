@@ -3,21 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Waves, MapPin, Anchor, Fish, Tent, TreePine, Baby, Shirt, Flame } from "lucide-react";
+import { SiteAvailabilityGrid } from "@/components/site-availability-grid";
+import { useImages } from "@/lib/use-images";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
-
-const PHOTOS = [
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104504491-ZQH6QM917WV13HP9VKB1/Lake+Front.jpeg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104547963-ID1TR2SHL8XTFF7K95K6/Swimming+Area.jpeg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104169034-7UNQ816UCACRDBO1H59Y/Social+Club.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104158347-0YIU18W83MKRZ11RNR11/Dock+in+the+Fog.jpeg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615837754534-QJ9O7WQUVCC37WXE0UU7/DJI_0024.JPG?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104159318-FTEJDO59VGBXYFBGVR7K/IMG_1415.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104159153-PZ1Z95QLFZ7FETTHQZYO/Foggy+Lake+.jpeg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104167743-QO8WC8V0TNZQ1EEMZLNY/Oh+Canada%21.jpg?format=1000w",
-  "https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104173599-C9DN1MZZQ6RD5WOIWN94/Swimming+Area.jpeg?format=1000w",
-];
 
 const AMENITIES = [
   { icon: Waves, label: "Sandy Beach" },
@@ -31,12 +21,14 @@ const AMENITIES = [
 ];
 
 export default function SerenityBayPage() {
+  const images = useImages();
+
   return (
     <>
       {/* Hero */}
       <section className="hero-section min-h-[60vh]">
         <Image
-          src="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1729104504491-ZQH6QM917WV13HP9VKB1/Lake+Front.jpeg?format=2500w"
+          src={images.heroes.bayLocation}
           alt="Serenity Bay lakefront"
           fill
           className="object-cover"
@@ -131,6 +123,13 @@ export default function SerenityBayPage() {
         </div>
       </section>
 
+      {/* Site Availability */}
+      <section className="py-16 px-6" style={{ background: "var(--bg-secondary)" }}>
+        <div className="max-w-[1200px] mx-auto">
+          <SiteAvailabilityGrid location="bay" />
+        </div>
+      </section>
+
       {/* Photo Gallery */}
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[1200px] mx-auto">
@@ -138,7 +137,7 @@ export default function SerenityBayPage() {
             Photo Gallery
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PHOTOS.map((src, i) => (
+            {images.galleries.bay.map((src, i) => (
               <div key={i} className="relative h-52 rounded-2xl overflow-hidden glass-card">
                 <Image src={src} alt={`Serenity Bay photo ${i + 1}`} fill className="object-cover" />
               </div>

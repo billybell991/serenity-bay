@@ -1,21 +1,40 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Waves, Trees } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { useImages } from "@/lib/use-images";
+import { loadRates, type RatesData, type RateItem } from "@/lib/rates-data";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
 
 export default function RatesPage() {
+  const [rates, setRates] = useState<RatesData | null>(null);
+  const images = useImages();
+
+  useEffect(() => {
+    setRates(loadRates());
+    const handler = () => setRates(loadRates());
+    window.addEventListener("rates-change", handler);
+    window.addEventListener("storage", handler);
+    return () => {
+      window.removeEventListener("rates-change", handler);
+      window.removeEventListener("storage", handler);
+    };
+  }, []);
+
+  if (!rates) return null;
+
   return (
     <>
       <PageHero
         title="Rates & Pricing"
         subtitle="Affordable family camping with full-service sites at both locations"
-        image="https://images.squarespace-cdn.com/content/v1/511665cae4b085e20f7d1e59/1615837754534-QJ9O7WQUVCC37WXE0UU7/DJI_0024.JPG?format=2500w"
+        image={images.heroes.rates}
       />
-      <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
+      <section style={{ background: "var(--bg-primary)", padding: "2rem 1.5rem" }}>
         <div className="max-w-[1000px] mx-auto">
 
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" initial="hidden" animate="visible" variants={stagger}>
@@ -28,21 +47,15 @@ export default function RatesPage() {
             <div className="p-6 space-y-5">
               <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>7200 Hwy 60, Eganville ON — Lakefront on Mink Lake</p>
               <div className="space-y-3">
-                <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                  <span className="text-sm font-medium">Seasonal Sites</span>
-                  <span className="font-bold" style={{ color: "var(--accent-cta)" }}>$2,950 – $4,550</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                  <span className="text-sm font-medium">Nightly Full Service</span>
-                  <span className="font-bold" style={{ color: "var(--accent-cta)" }}>$60 / night</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Weekly Special</span>
-                  <span className="font-bold text-sm" style={{ color: "var(--accent-sage)" }}>Book 7, Pay for 6</span>
-                </div>
+                {rates.bay.items.map((item, i) => (
+                  <div key={item.id} className={`flex justify-between items-center ${i < rates.bay.items.length - 1 ? "pb-3 border-b border-black/5" : ""}`}>
+                    <span className="text-sm font-medium">{item.label}</span>
+                    <span className="font-bold" style={{ color: "var(--accent-cta)" }}>{item.value}</span>
+                  </div>
+                ))}
               </div>
               <p className="text-xs text-center" style={{ color: "var(--text-dim)" }}>
-                + HST. All sites include water, sewer, 30-amp power.
+                {rates.bay.footnote}
               </p>
             </div>
           </motion.div>
@@ -56,26 +69,19 @@ export default function RatesPage() {
             <div className="p-6 space-y-5">
               <p className="text-sm text-center" style={{ color: "var(--text-muted)" }}>435 Castleford Rd, Renfrew ON — Rolling Hills &amp; Pool</p>
               <div className="space-y-3">
-                <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                  <span className="text-sm font-medium">Seasonal Sites</span>
-                  <span className="font-bold" style={{ color: "var(--accent-cta)" }}>$2,750</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                  <span className="text-sm font-medium">Nightly Full Service</span>
-                  <span className="font-bold" style={{ color: "var(--accent-cta)" }}>$60 / night incl. HST</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Weekly Special</span>
-                  <span className="font-bold text-sm" style={{ color: "var(--accent-sage)" }}>Stay 7 for Price of 6</span>
-                </div>
+                {rates.hills.items.map((item, i) => (
+                  <div key={item.id} className={`flex justify-between items-center ${i < rates.hills.items.length - 1 ? "pb-3 border-b border-black/5" : ""}`}>
+                    <span className="text-sm font-medium">{item.label}</span>
+                    <span className="font-bold" style={{ color: "var(--accent-cta)" }}>{item.value}</span>
+                  </div>
+                ))}
               </div>
               <p className="text-xs text-center" style={{ color: "var(--text-dim)" }}>
-                + HST. All sites include water, sewer, 30-amp power.
+                {rates.hills.footnote}
               </p>
             </div>
           </motion.div>
         </motion.div>
-
 
       </div>
     </section>

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { useImages } from "@/lib/use-images";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { visible: { transition: { staggerChildren: 0.08 } } };
@@ -53,12 +54,14 @@ const ATTRACTIONS = [
 ];
 
 export default function AttractionsPage() {
+  const images = useImages();
+
   return (
     <>
       <PageHero
         title="Local Attractions"
         subtitle="There's so much to explore in the Ottawa Valley"
-        image="/ottawa-valley.jpg"
+        image={images.heroes.attractions}
       />
       <section className="py-24 px-6" style={{ background: "var(--bg-primary)" }}>
         <div className="max-w-[860px] mx-auto">

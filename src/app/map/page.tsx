@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Map, X, MapPin, TreePine } from "lucide-react";
@@ -67,9 +66,9 @@ export default function ParkMapPage() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Map className="w-8 h-8" style={{ color: "var(--accent-cta)" }} />
           </div>
-          <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>Park Map</h1>
+          <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)" }}>Serenity Bay Map</h1>
           <p style={{ color: "var(--text-muted)" }}>
-            Explore Serenity Bay — tap lots and landmarks for details
+            Explore the Serenity Bay campground — tap lots and landmarks for details
           </p>
         </motion.div>
 
@@ -81,11 +80,10 @@ export default function ParkMapPage() {
           variants={fadeUp}
           onClick={handleMapClick}
         >
-          <Image
-            src="/park_map.png"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/serenity-bay/park_map.png"
             alt="Serenity Bay Park Map"
-            width={2000}
-            height={1500}
             className="w-full h-auto"
           />
 
