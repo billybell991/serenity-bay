@@ -70,16 +70,12 @@ export function Navbar() {
     >
       <div className="max-w-[1200px] mx-auto flex items-center justify-between h-[60px]" style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>
         <Link href="/" onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer select-none">
-          <TreePine
-            className="w-5 h-5 transition-colors duration-500"
-            style={{ color: scrolled ? "var(--gold)" : "rgba(255,255,255,0.85)" }}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/serenity-bay/serenity-logo.png"
+            alt="Serenity Resorts"
+            style={{ height: "36px", width: "auto", transition: "opacity 0.5s", opacity: scrolled ? 0.85 : 1 }}
           />
-          <span
-            className="text-[0.7rem] tracking-widest uppercase font-normal transition-colors duration-500"
-            style={{ fontFamily: "var(--font-heading)", color: textColor }}
-          >
-            Serenity Resorts
-          </span>
         </Link>
 
         <ul className="hidden items-center gap-x-2">
